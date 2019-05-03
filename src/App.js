@@ -1,4 +1,4 @@
-// import React, { useState } from "react";
+//import React, { useState } from "react";
 import React, { Component } from "react";
 import "./App.css";
 import Person from "./Person/Person";
@@ -10,7 +10,8 @@ class App extends Component {
       { name: 'max', age: 28 },
       { name: 'max', age: 28 }
     ],
-    otherState: 'some values'
+    otherState: 'some values',
+    showPersons: false
   };
   switchNameHAndler = (newName) => {
     // console.log('clicked');
@@ -33,6 +34,11 @@ class App extends Component {
     });
   }
 
+  togglePersonsHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({ showPersons: !doesShow });
+  }
+
 
   render() {
     const style = {
@@ -42,26 +48,37 @@ class App extends Component {
       padding: '8px',
       cursor: 'pointer'
     };
+
+    let persons = null;
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          <Person
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age}
+          />
+          <Person
+            name={this.state.persons[1].name}
+            age={this.state.persons[1].age}
+            click={this.switchNameHAndler.bind(this, 'REACT')} changed={this.nameChangehandler}
+
+          >
+            My Hobbies: Archery
+    </Person>
+          <Person
+            name={this.state.persons[2].name}
+            age={this.state.persons[2].age}
+          />
+        </div>
+
+      );
+    }
     return (
       <div className="App">
         <h1> OUR APPS </h1>
-        <button style={style} onClick={this.switchNameHAndler.bind(this, 'JAVASCRIPT')}>Switch Name</button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age}
-        />
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age}
-          click={this.switchNameHAndler.bind(this, 'REACT')} changed={this.nameChangehandler}
+        <button style={style} onClick={() => this.togglePersonsHandler()}>Toggle</button>
 
-        >
-          My Hobbies: Archery
-        </Person>
-        <Person
-          name={this.state.persons[2].name}
-          age={this.state.persons[2].age}
-        />
+        {persons}
       </div>
     );
   }
@@ -112,3 +129,26 @@ export default App;
 //   );
 // };
 // export default App;
+
+
+
+
+//ternary  operation for toggle 
+// {this.state.showPersons ? <div>
+//   <Person
+//     name={this.state.persons[0].name}
+//     age={this.state.persons[0].age}
+//   />
+//   <Person
+//     name={this.state.persons[1].name}
+//     age={this.state.persons[1].age}
+//     click={this.switchNameHAndler.bind(this, 'REACT')} changed={this.nameChangehandler}
+
+//   >
+//     My Hobbies: Archery
+// </Person>
+//   <Person
+//     name={this.state.persons[2].name}
+//     age={this.state.persons[2].age}
+//   />
+// </div> : null}
